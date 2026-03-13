@@ -21,9 +21,14 @@ All data is encoded directly in the URL using [lz-string](https://github.com/pie
 3. Enable **Developer mode** (top right)
 4. Click **Load unpacked** → select the `extension/` folder
 
-### Landing Page (recipient)
+### Landing Page (host your own)
 
-The landing page is hosted at **[beanb0t.github.io/ocado-list-share](https://beanb0t.github.io/ocado-list-share)** — recipients just click the shared link, no install needed.
+Each user should deploy their own landing page so share links point to a URL you control.
+
+1. Fork this repo
+2. Enable **GitHub Pages** in your fork: Settings → Pages → Source: `main`, folder: `/` (root)
+3. Your landing page will be at `https://<your-username>.github.io/ocado-list-share`
+4. Update `LANDING_PAGE_URL` in `extension/lib/encoder.js` to your GitHub Pages URL
 
 ## Project Structure
 
@@ -56,6 +61,7 @@ npx serve landing -l 3456   # Preview landing page locally
 
 ## Privacy
 
-- All list data lives in the URL hash fragment — it's never sent to any server
-- Links are shortened via [is.gd](https://is.gd) (the full URL is sent to their API)
-- No analytics, no tracking, no cookies
+- All list data lives in the URL hash fragment — **never sent to any web server** (including GitHub Pages)
+- Each user hosts their own landing page, so share links point to a URL you control
+- Links are shortened via [is.gd](https://is.gd) — note that the **full URL including the hash is sent to is.gd** when shortening. If this concerns you, disable shortening in `popup.js` by replacing the `shortenURL()` call with the long URL directly
+- No analytics, no tracking, no cookies on the landing page

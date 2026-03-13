@@ -7,6 +7,7 @@
 
 const OcadoEncoder = (() => {
   const CURRENT_VERSION = 1;
+  // ⚠️ Change this to YOUR GitHub Pages URL after forking
   const LANDING_PAGE_URL = 'https://beanb0t.github.io/ocado-list-share';
 
   function createPayload(items, listName) {
