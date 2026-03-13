@@ -16,6 +16,26 @@ const states = {
 
 let extractedData = null;
 
+/**
+ * Shorten a URL using the is.gd API.
+ * Returns the short URL, or the original URL if shortening fails.
+ */
+async function shortenURL(longURL) {
+  try {
+    const apiURL = `https://is.gd/create.php?format=simple&url=${encodeURIComponent(longURL)}`;
+    const response = await fetch(apiURL);
+    if (!response.ok) throw new Error('Shortener API error');
+    const shortURL = await response.text();
+    // Sanity check — is.gd returns a URL starting with https://is.gd/
+    if (shortURL.startsWith('https://is.gd/')) {
+      return shortURL;
+    }
+    return longURL;
+  } catch {
+    return longURL;
+  }
+}
+
 function showState(name) {
   Object.values(states).forEach((el) => (el.hidden = true));
   states[name].hidden = false;
@@ -81,10 +101,17 @@ async function init() {
 document.getElementById('share-btn').addEventListener('click', async () => {
   if (!extractedData) return;
 
-  const url = OcadoEncoder.generateShareURL(
+  const shareBtn = document.getElementById('share-btn');
+  shareBtn.textContent = 'Shortening link...';
+  shareBtn.disabled = true;
+
+  const longURL = OcadoEncoder.generateShareURL(
     extractedData.items,
     extractedData.listName
   );
+
+  // Try to shorten the URL
+  const url = await shortenURL(longURL);
 
   // Copy to clipboard
   try {
@@ -103,6 +130,9 @@ document.getElementById('share-btn').addEventListener('click', async () => {
   document.getElementById('share-url').value = url;
   document.getElementById('preview-link').href = url;
   showState('shared');
+
+  shareBtn.textContent = 'Share This List';
+  shareBtn.disabled = false;
 });
 
 // Copy button (in shared state)

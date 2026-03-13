@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "description": "Share your Ocado shopping list or basket with anyone via a link",
   "permissions": ["activeTab", "scripting"],
-  "host_permissions": ["*://*.ocado.com/*"],
+  "host_permissions": ["*://*.ocado.com/*", "https://is.gd/*"],
   "action": {
     "default_popup": "popup/popup.html",
     "default_icon": {
