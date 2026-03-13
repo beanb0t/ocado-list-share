@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="popup">
+    <header>
+      <h1>Ocado List Share</h1>
+    </header>
+
+    <!-- Not on Ocado -->
+    <div id="state-not-ocado" class="state" hidden>
+      <p class="message">Navigate to <strong>ocado.com</strong> to share a shopping list or basket.</p>
+    </div>
+
+    <!-- Scanning -->
+    <div id="state-scanning" class="state" hidden>
+      <p class="message">Scanning page for items...</p>
+      <div class="spinner"></div>
+    </div>
+
+    <!-- No items found -->
+    <div id="state-empty" class="state" hidden>
+      <p class="message">No items found on this page.</p>
+      <p class="hint">Navigate to a <strong>Shopping List</strong> or your <strong>Basket</strong> on Ocado.</p>
+    </div>
+
+    <!-- Items found -->
+    <div id="state-ready" class="state" hidden>
+      <div class="list-info">
+        <p class="page-type" id="page-type"></p>
+        <p class="item-count" id="item-count"></p>
+      </div>
+      <button id="share-btn" class="btn btn-primary">Share This List</button>
+    </div>
+
+    <!-- Link generated -->
+    <div id="state-shared" class="state" hidden>
+      <div class="success">
+        <p>Link copied to clipboard!</p>
+      </div>
+      <div class="url-display">
+        <input type="text" id="share-url" readonly>
+        <button id="copy-btn" class="btn btn-small">Copy</button>
+      </div>
+      <a id="preview-link" href="#" target="_blank" class="preview-link">Preview shared list</a>
+    </div>
+
+    <!-- Error -->
+    <div id="state-error" class="state" hidden>
+      <p class="message error" id="error-message"></p>
+    </div>
+  </div>
+
+  <script src="../lib/lz-string.min.js"></script>
+  <script src="../lib/encoder.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>
